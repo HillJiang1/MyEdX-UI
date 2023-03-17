@@ -56,6 +56,35 @@ export const constantRoutes = [
   },
 
   {
+    path: '/teacher',
+    component: Layout,
+    redirect: '/teacher/list',
+    name: 'Teacher',
+    meta: { title: 'Teacher', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: 'Teacher List',
+        component: () => import('@/views/teacher/list'),
+        meta: { title: 'Teacher List', icon: 'table' }
+      },
+      {
+        path: 'insert',
+        name: 'Insert Teacher',
+        component: () => import('@/views/teacher/insert'),
+        meta: { title: 'Insert Teacher', icon: 'tree' }
+      },
+      {
+        path: 'edit/:id',
+        name: 'Edit Teacher',
+        component: () => import('@/views/teacher/insert'),
+        meta: { title: 'Edit Teacher', noCache: true },
+        hidden: true
+      }
+    ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',

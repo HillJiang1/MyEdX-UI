@@ -10,27 +10,50 @@
             </el-form-item>
   
             <el-form-item label="讲师头衔">
- 
                 <el-select v-model="teacher.level" clearable placeholder="请选择"> 
                     <el-option :value="1" label="高级讲师"/>
                     <el-option :value="2" label="首席讲师"/> </el-select>
-                </el-form-item>
-                <el-form-item label="讲师资历">
-                    <el-input v-model="teacher.career"/> </el-form-item>
-                    <el-form-item label="讲师简介">
-                        <el-input v-model="teacher.intro" :rows="10" type="textarea"/> </el-form-item>
-                        <el-form-item>
-                            <el-button :disabled="saveBtnDisabled" type="primary" @click="saveOrUpdate">Save</el-button>
-                        </el-form-item>
-                    </el-form>
+            </el-form-item>
+
+            <el-form-item label="讲师资历">
+                <el-input v-model="teacher.career"/> 
+            </el-form-item>
+                
+            <el-form-item label="讲师简介">
+                <el-input v-model="teacher.intro" :rows="10" type="textarea"/> 
+            </el-form-item>
+
+            <el-form-item label="讲师头像">
+                <!-- 头衔缩略图 -->
+                <pan-thumb :image="teacher.avatar"/>
+                <!-- 文件上传按钮 -->
+                <el-button type="primary" icon="el-icon-upload" @click="imagecropperShow=true">更换头像 </el-button>
+                <image-cropper
+                                v-show="imagecropperShow"
+                                :width="300"
+                                :height="300"
+                                :key="imagecropperKey"
+                                :url="BASE_API+'/ossservice/file/upload'"
+                                field="file"
+                                @close="close"
+                                @crop-upload-success="cropSuccess"/>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button :disabled="saveBtnDisabled" type="primary" @click="saveOrUpdate">Save</el-button>
+            </el-form-item>
+        </el-form>
   </div>
 </template>
 
 <script>
 
 import teacher from '@/api/teacher'
+import ImageCropper from '@/components/ImageCropper'
+import PanThumb from '@/components/PanThumb'
 
 export default {
+    components:{ ImageCropper, PanThumb},
     data() {
         return {
             teacher: {
@@ -41,6 +64,10 @@ export default {
                 intro: '',
                 avatar: ''
             },
+
+            imagecropperShow: false,
+            imagecropperKey: 0,
+            BASE_API:process.env.VUE_APP_BASE_API,
             saveBtnDisabled: false // 保存按钮是否禁用, 
         }
     }, 
@@ -53,6 +80,19 @@ export default {
     },
 
     methods: {
+        close() {
+            console.log(this.BASE_API)
+            this.imagecropperShow = false
+            this.imagecropperKey = this.imagecropperKey + 1
+        },
+
+        cropSuccess(data) {
+            console.log(data)
+            this.imagecropperShow = false
+            this.teacher.avatar = data.url
+            this.imagecropperKey = this.imagecropperKey + 1
+        },
+
         getById(id) {
             teacher.getById(id)
             .then(response => {

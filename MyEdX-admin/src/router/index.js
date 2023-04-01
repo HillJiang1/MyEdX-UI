@@ -106,6 +106,49 @@ export const constantRoutes = [
     ]
   },
 
+
+  {
+    path: '/course',
+    component: Layout,
+    redirect: '/course/list',
+    name: 'Course',
+    meta: { title: 'Course', icon: 'form' },
+    children: [
+      {
+        path: 'list',
+        name: 'Course List',
+        component: () => import('@/views/course/list'),
+        meta: { title: 'Course List', icon: 'table' }
+      },
+      {
+        path: 'info',
+        name: 'Import Course',
+        component: () => import('@/views/course/info'),
+        meta: { title: 'Add Course', icon: 'tree' }
+      },
+      {
+        path: 'info/:id',
+        name: 'CourseInfoEdit',
+        component: () => import('@/views/course/info'), 
+        meta: { title: 'Edit Course Info', noCache: true }, 
+        hidden: true
+        }, {
+        path: 'chapter/:id',
+        name: 'CourseChapterEdit',
+        component: () => import('@/views/course/chapter'), 
+        meta: { title: 'Edit Course Chapter', noCache: true },
+        hidden: true
+        }, {
+        path: 'publish/:id',
+        name: 'CoursePublishEdit',
+        component: () => import('@/views/course/publish'), 
+        meta: { title: 'Publish Course', noCache: true },
+        hidden: true
+        }
+    ]
+  },
+
+
   // {
   //   path: '/example',
   //   component: Layout,

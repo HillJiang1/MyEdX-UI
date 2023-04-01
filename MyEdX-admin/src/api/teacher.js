@@ -34,6 +34,13 @@ export default {
     })
   },
 
+  getList() {
+    return request({
+        url: `${api_name}/getAll`,
+        method: 'get'
+    })
+  },
+
   updateById(teacher){
     return request({
         url: `${api_name}/${teacher.id}`,

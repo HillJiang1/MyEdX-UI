@@ -129,19 +129,19 @@ export const constantRoutes = [
       {
         path: 'info/:id',
         name: 'CourseInfoEdit',
-        component: () => import('@/views/course/info'), 
-        meta: { title: 'Edit Course Info', noCache: true }, 
+        component: () => import('@/views/course/info'),
+        meta: { title: 'Edit Course Info', noCache: true },
         hidden: true
         }, {
         path: 'chapter/:id',
         name: 'CourseChapterEdit',
-        component: () => import('@/views/course/chapter'), 
+        component: () => import('@/views/course/chapter'),
         meta: { title: 'Edit Course Chapter', noCache: true },
         hidden: true
         }, {
         path: 'publish/:id',
         name: 'CoursePublishEdit',
-        component: () => import('@/views/course/publish'), 
+        component: () => import('@/views/course/publish'),
         meta: { title: 'Publish Course', noCache: true },
         hidden: true
         }
